@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -13,6 +14,7 @@ import java.time.Duration;
 
 public class StandaloneTest {
     public static void main(String[] args) {
+        //STANDALONE TEST THAT RUNS THROUGH ACCOUNT CREATION AND CHECKING ACCOUNT CREATION
         //driver setup
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
@@ -46,7 +48,24 @@ public class StandaloneTest {
         //make sure left-panel contains user's name
         Assert.assertTrue(driver.findElement(By.className("smallText")).getText().contains("kor hen"));
 
+        //open new checking account
+        driver.findElement(By.cssSelector("a[href*='openaccount']")).click();
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("input[value*='Account']"))));
+        Select select = new Select(driver.findElement(By.id("type")));
+        select.selectByIndex(0);
+        driver.findElement(By.cssSelector("input[value*='Account']")).click();
+        //open new savings account
 
+
+        //shutdown application
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("a[href*='admin']"))));
+        driver.findElement(By.cssSelector("a[href='admin.htm']")).click();
+        //wait for element to appear
+        wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("button[value='CLEAN']"))));
+        //reset database
+        driver.findElement(By.cssSelector("button[value='CLEAN']")).click();
+        //close application
+        driver.quit();
 
         //ACCOUNTS OVERVIEW has weird bugs
         //open new checking account, verify account creation
