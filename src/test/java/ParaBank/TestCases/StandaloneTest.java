@@ -19,6 +19,7 @@ public class StandaloneTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-application-cache");
+        //driver creation
         WebDriver driver = new ChromeDriver(options);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3L));
         driver.get("https://parabank.parasoft.com/parabank/index.htm");
