@@ -8,7 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class IndexPage extends AbstractComponents {
-    WebDriver driver;
+
     public IndexPage(WebDriver driver) {
         super(driver);
         this.driver=driver;
@@ -19,6 +19,14 @@ public class IndexPage extends AbstractComponents {
     public void getURL(){
         driver.get("https://parabank.parasoft.com/parabank/index.htm");
         waitForElementAppear(registrationBtn);
+
+
+    }
+
+    public RegistrationPage clickRegistration(){
+        registrationBtn.click();
+
+        return new RegistrationPage(driver);
     }
 
 
