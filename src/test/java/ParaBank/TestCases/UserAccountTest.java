@@ -2,6 +2,7 @@ package ParaBank.TestCases;
 
 import ParaBank.Pages.IndexPage;
 import ParaBank.Pages.RegistrationPage;
+import ParaBank.Pages.OverviewPage;
 import ParaBank.TestComponents.BaseTest;
 import ParaBank.TestData.DataReader;
 import org.openqa.selenium.WebDriver;
@@ -20,6 +21,13 @@ public class UserAccountTest extends BaseTest {
         registration.submitRegistration(testData);
         Assert.assertTrue(registration.nameCheck(testData));
         Assert.assertTrue(registration.accountCheck(testData));
+        IndexPage index = registration.logoutApp();
+        OverviewPage overview = index.loginApp(testData);
+        Assert.assertTrue(overview.nameCheck(testData));
+
+        //change to testng logging
+        System.out.println(overview.getAccountBalance());
+
     }
     @DataProvider
     public Object[][] getData() throws IOException {

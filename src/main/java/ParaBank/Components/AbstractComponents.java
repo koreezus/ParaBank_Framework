@@ -1,5 +1,7 @@
 package ParaBank.Components;
 
+import ParaBank.Pages.IndexPage;
+import ParaBank.Pages.OverviewPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +22,8 @@ public class AbstractComponents {
     }
     @FindBy(className="smallText")
     WebElement nameText;
+    @FindBy(css="a[href*='logout'")
+    WebElement logoutBtn;
     public void waitForElementAppear(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
     }
@@ -37,4 +41,9 @@ public class AbstractComponents {
         waitForElementAppear(nameText);
         return nameText.getText().contains(data.get("firstName"));
     }
+    public IndexPage logoutApp(){
+        logoutBtn.click();
+        return new IndexPage(driver);
+    }
+
 }

@@ -18,6 +18,7 @@ public class DataReader{
     public List<HashMap<String,String>> mapJsonData(String filePath) throws IOException {
         String jsonContent = Files.readString(Paths.get(filePath), StandardCharsets.UTF_8);
         ObjectMapper mapper = new ObjectMapper();
+        //vulnerable fix later?
         return mapper.readValue(jsonContent,new TypeReference<List<HashMap<String,String>>>(){
         });
 
