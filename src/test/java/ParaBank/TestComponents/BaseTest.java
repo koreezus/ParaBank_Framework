@@ -51,8 +51,12 @@ public class BaseTest {
         index.getURL();
         return index;
     }
-//    @AfterTest(alwaysRun=true)
-//    public void tearDown(){
-//        driver.quit();
-//    }
+    @AfterMethod(alwaysRun = true)
+    public void closeBrowser(){
+        driver.close();
+    }
+    @AfterTest(alwaysRun=true)
+    public void tearDown(){
+        driver.quit();
+    }
 }

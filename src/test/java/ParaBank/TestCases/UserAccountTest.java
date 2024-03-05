@@ -1,8 +1,6 @@
 package ParaBank.TestCases;
 
-import ParaBank.Pages.IndexPage;
-import ParaBank.Pages.RegistrationPage;
-import ParaBank.Pages.OverviewPage;
+import ParaBank.Pages.*;
 import ParaBank.TestComponents.BaseTest;
 import ParaBank.TestData.DataReader;
 import org.openqa.selenium.WebDriver;
@@ -17,17 +15,33 @@ import java.util.List;
 public class UserAccountTest extends BaseTest {
     @Test(dataProvider="getData")
     public void newUserRegistration(HashMap<String,String>testData) throws IOException {
+        //create new account, verify username and name are correct, verify cash amount
         RegistrationPage registration = index.clickRegistration();
         registration.submitRegistration(testData);
         Assert.assertTrue(registration.nameCheck(testData));
         Assert.assertTrue(registration.accountCheck(testData));
-        IndexPage index = registration.logoutApp();
-        OverviewPage overview = index.loginApp(testData);
+        OverviewPage overview = registration.accountOverview();
         Assert.assertTrue(overview.nameCheck(testData));
-
-        //change to testng logging
         System.out.println(overview.getAccountBalance());
+        overview.logoutApp();
 
+//        NewAccountPage accountPage = overview.openAccount();
+//        accountPage.openCheckingAccount();
+    }
+    @Test(dataProvider="getData")
+    public void positiveLogin(HashMap<String,String>testData){
+        OverviewPage overview = index.loginAppPos(testData);
+        Assert.assertTrue(overview.nameCheck(testData));
+        overview.logoutApp();
+    }
+    @Test(dataProvider="getData")
+    public void negativeLogin(HashMap<String,String>testData){
+        Assert.assertEquals(index.loginAppNeg(testData),"An internal error has occurred and has been logged.");
+    }
+    @Test(dataProvider="getData")
+    public void passwordRecovery(HashMap<String,String>testData){
+        LookupPage lookup = index.passwordRecovery();
+        lookup.findLoginInfo(testData);
     }
     @DataProvider
     public Object[][] getData() throws IOException {
