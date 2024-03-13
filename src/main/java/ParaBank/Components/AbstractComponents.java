@@ -1,9 +1,6 @@
 package ParaBank.Components;
 
-import ParaBank.Pages.IndexPage;
-import ParaBank.Pages.LookupPage;
-import ParaBank.Pages.NewAccountPage;
-import ParaBank.Pages.OverviewPage;
+import ParaBank.Pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,18 +27,14 @@ public class AbstractComponents {
     WebElement openAccountBtn;
     @FindBy(css="a[href*='overview']")
     WebElement accountOverviewBtn;
+    @FindBy(xpath="//a[@href='admin.htm']")
+    WebElement adminBtn;
+    @FindBy(css="a[href*='index']")
+    WebElement indexBtn;
     public void waitForElementAppear(WebElement element){
         wait.until(ExpectedConditions.visibilityOf(element));
     }
-    public void waitForElementDissapear(WebElement element){
-        wait.until(ExpectedConditions.visibilityOf(element));
-    }
-    public void waitForByAppear(){
 
-    }
-    public void waitForByDissapear(){
-
-    }
     public boolean nameCheck(HashMap<String,String> data){
         ////make sure left-panel contains user's name
         waitForElementAppear(nameText);
@@ -56,9 +49,19 @@ public class AbstractComponents {
         logoutBtn.click();
         return new IndexPage(driver);
     }
+    public IndexPage indexPage(){
+        indexBtn.click();
+        return new IndexPage(driver);
+    }
     public OverviewPage accountOverview(){
         accountOverviewBtn.click();
         return new OverviewPage(driver);
+    }
+    public AdminPage adminPage(){
+        //on first page load admin.htm has a jsession id attached to it? goes away on reload, making it hard to target element. fix later
+        //waitForElementAppear(adminBtn);
+        adminBtn.click();
+        return new AdminPage(driver);
     }
 
 
